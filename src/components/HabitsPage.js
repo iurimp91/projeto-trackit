@@ -1,20 +1,19 @@
 import styled from "styled-components";
-import logo from "../images/logo-header.png";
-import bob from "../images/bob.png";
+
+import Header from "./Header";
+import Footer from "./Footer";
+
 import addButton from "../images/add-button.png";
 import trash from "../images/trash.png";
 
 export default function HabitsPage() {
     return(
         <>
-            <Header>
-                <img src={logo} />
-                <UserPicture src={bob} />
-            </Header>
+            <Header />
             <ContentContainer>
                 <TitleContainer>
                     <h1>Meus hábitos</h1>
-                    <img src={addButton} />
+                    <img src={addButton} alt="Add item icon" />
                 </TitleContainer>
                 <NewHabitContainer>
                     <input type="text" placeholder="nome do hábito" />
@@ -25,39 +24,21 @@ export default function HabitsPage() {
                     <li className="habit">
                         <span>Ler 1 capítulo de livro</span>
                         <ul><li>D</li><li>S</li><li>T</li><li>Q</li><li>Q</li><li>S</li><li>S</li></ul>
-                        <img src={trash} />
+                        <img src={trash} alt="Trash icon" />
                     </li>
                 </HabitsList>
                 <span>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</span>
             </ContentContainer>
+            <Footer />
         </>
     );
 }
 
-const Header = styled.div`
-    width: 100%;
-    height: 70px;
-    background-color: #126BA5;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-    position: fixed;
-    left: 0;
-    top: 0;
-`;
-
-const UserPicture = styled.img`
-    width: 51px;
-    height: 51px;
-    border-radius: 100px;
-`;
-
 const ContentContainer = styled.div`
+    height: 100%;
     margin-top: 70px;
     background-color: #F2F2F2;
-    padding: 0 18px 10px 18px;
+    padding: 0 18px 110px 18px;
 
     span {
         font-size: 18px;
@@ -197,6 +178,4 @@ const HabitsList = styled.ul`
             cursor: pointer;
         }
     }
-
-    
 `;

@@ -1,14 +1,18 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 import logo from "../images/logo.png";
 
 export default function LogInPage() {
     return(
         <MainContainer>
-            <Logo src={logo} />
+            <Logo src={logo} alt="Track It complete logo" />
             <Input type="text" placeholder="email" />
             <Input type="password" placeholder="senha" />
             <Button>Entrar</Button>
-            <Span>Não tem uma conta? Cadastre-se!</Span>
+            <Link to="/cadastro">
+                <Span>Não tem uma conta? Cadastre-se!</Span>
+            </Link>
         </MainContainer>
     );
 }

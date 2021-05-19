@@ -1,13 +1,16 @@
 import styled from "styled-components";
+import { useContext } from "react";
 
 import logo from "../images/logo-header.png";
-import bob from "../images/bob.png";
+import UserContext from "../contexts/UserContext";
 
 export default function Header() {
+    const { user } = useContext(UserContext);
+
     return(
         <Top>
             <img src={logo} alt="Track It simple logo" />
-            <UserPicture src={bob} alt="User picture" />
+            <UserPicture src={user.image} alt="User picture" />
         </Top>
     );
 }

@@ -1,25 +1,34 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import Loading from "./Loading";
 
 import logo from "../images/logo.png";
+import UserContext from "../contexts/UserContext";
 
-export default function LogInPage({ user, setUser }) {
+export default function LogInPage(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [body, setBody] = useState(null);
+    const history = useHistory();
+    const { user, setUser } = useContext(UserContext);
 
     function signIn() {
         const newBody = { email, password };
         setBody(newBody);
-        /*const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", newBody);
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", newBody);
     
         request.then(response => {
             setUser(response.data);
-        })*/
+            history.push("/hoje");
+        });
+
+        request.catch(response => {
+            alert("Por favor, confira seu email e senha e tente novamente.");
+            setBody(null);
+        });
     }
 
     return(

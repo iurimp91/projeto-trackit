@@ -39,6 +39,6 @@ const Bottom = styled.div`
         font-size: 18px;
         position: absolute;
         bottom: 10px;
-        left: 142px;
+        left: calc((100vw - 91px) / 2);
     }
 `;

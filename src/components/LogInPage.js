@@ -1,16 +1,34 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+
+import Loading from "./Loading";
 
 import logo from "../images/logo.png";
 
-export default function LogInPage() {
+export default function LogInPage({ user, setUser }) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [body, setBody] = useState(null);
+
+    function signIn() {
+        const newBody = { email, password };
+        setBody(newBody);
+        /*const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", newBody);
+    
+        request.then(response => {
+            setUser(response.data);
+        })*/
+    }
+
     return(
         <MainContainer>
             <Logo src={logo} alt="Track It complete logo" />
-            <Input type="text" placeholder="email" />
-            <Input type="password" placeholder="senha" />
-            <Button>Entrar</Button>
-            <Link to="/cadastro">
+            <Input disabled={body === null ? false : true} type="text" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+            <Input disabled={body === null ? false : true} type="password" placeholder="senha" onChange={(e) => setPassword(e.target.value)} />
+            <Button disabled={body === null ? false : true} onClick={signIn}>{body === null ? "Entrar" : <Loading />}</Button>
+            <Link to={body === null ? "/cadastro" : ""}>
                 <Span>Não tem uma conta? Cadastre-se!</Span>
             </Link>
         </MainContainer>
@@ -37,11 +55,13 @@ const Input = styled.input`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     margin-bottom: 6px;
+    padding-left: 7px;
+    font-size: 20px;
+    color: ${props => props.disabled ? "#AFAFAF" : "#666666"};
+    background-color: ${props => props.disabled ? "#F2F2F2" : "#FFFFFF"};
 
     ::placeholder {
-        font-size: 20px;
-        color: #DBDBDB;    
-        padding-left: 7px;
+        color: #DBDBDB;   
     }
 `;
 
@@ -55,6 +75,7 @@ const Button = styled.button`
     font-size: 21px;
     cursor: pointer;
     margin-bottom: 25px;
+    opacity: ${props => props.disabled ? 0.7 : 1};
 `;
 
 const Span = styled.span`

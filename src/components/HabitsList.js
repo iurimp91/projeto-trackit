@@ -2,14 +2,25 @@ import styled from "styled-components";
 import trash from "../images/trash.png";
 
 export default function HabitsList({ userHabits, setUserHabits }) {
+    console.log(userHabits);
 
     return(
         <HabitContainer>
-            <li className="habit">
-                <span>Ler 1 capítulo de livro</span>
-                <ul><li>D</li><li>S</li><li>T</li><li>Q</li><li>Q</li><li>S</li><li>S</li></ul>
-                <img src={trash} alt="Trash icon" />
-            </li>
+            {userHabits.map(h =>
+                <li key={h.id} className="habit">
+                    <span>{h.name}</span>
+                    <ul>
+                        <Li selected={h.days.includes(0) ? true : false}>D</Li>
+                        <Li selected={h.days.includes(1) ? true : false}>S</Li>
+                        <Li selected={h.days.includes(2) ? true : false}>T</Li>
+                        <Li selected={h.days.includes(3) ? true : false}>Q</Li>
+                        <Li selected={h.days.includes(4) ? true : false}>Q</Li>
+                        <Li selected={h.days.includes(5) ? true : false}>S</Li>
+                        <Li selected={h.days.includes(6) ? true : false}>S</Li>
+                    </ul>
+                    <img src={trash} alt="Trash icon" />
+                </li>   
+            )}
         </HabitContainer>
     );
 }
@@ -32,19 +43,6 @@ const HabitContainer = styled.ul`
         ul {
             margin-top: 10px;
             display: flex;
-        
-            li {
-                width: 30px;
-                height: 30px;
-                border-radius: 5px;
-                border: 1px solid #D4D4D4;
-                color: #DBDBDB;
-                font-size: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 4px;
-            }
         }
 
         img {
@@ -56,4 +54,18 @@ const HabitContainer = styled.ul`
             cursor: pointer;
         }
     }
+`;
+
+const Li = styled.li`
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #D4D4D4;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    color: ${props => props.selected ? "#FFFFFF" : "#DBDBDB"};
+    background-color: ${props => props.selected ? "#CFCFCF" : "#FFFFFF"};     
 `;

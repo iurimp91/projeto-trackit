@@ -25,7 +25,7 @@ export default function LogInPage(props) {
             history.push("/hoje");
         });
 
-        request.catch(response => {
+        request.catch(error => {
             alert("Por favor, confira seu email e senha e tente novamente.");
             setBody(null);
         });

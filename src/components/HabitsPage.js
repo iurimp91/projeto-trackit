@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 import Header from "./Header";
 import Footer from "./Footer";
 import NewHabitContainer from "./NewHabitContainer";
 import HabitsList from "./HabitsList";
+import UserContext from "../contexts/UserContext";
 
 import addButton from "../images/add-button.png";
 
@@ -12,10 +14,26 @@ export default function HabitsPage() {
     const [enableNewHabit, setEnableNewHabit] = useState(false);
     const [userHabits, setUserHabits] = useState([]);
     const [habitName, setHabitName] = useState("");
+    const { user } = useContext(UserContext);
 
     function addHabit() {
         setEnableNewHabit(true);
     }
+
+    function getUserHabits() {
+        const config = { headers: { Authorization: `Bearer ${user.token}` } };
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+
+        request.then(response => {
+            setUserHabits(response.data);
+        });
+
+        request.catch(error => {
+            alert("Algo deu errado com sua requisição, por favor, tente novamente.");
+        });
+    }
+
+    useEffect(getUserHabits,[]);
 
     return(
         <>
@@ -31,6 +49,7 @@ export default function HabitsPage() {
                         setEnableNewHabit={setEnableNewHabit}
                         habitName={habitName}
                         setHabitName={setHabitName}
+                        getUserHabits={getUserHabits}
                     />
                 }
                 {userHabits.length === 0 

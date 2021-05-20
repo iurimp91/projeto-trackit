@@ -1,8 +1,27 @@
 import styled from "styled-components";
 import trash from "../images/trash.png";
+import { useContext } from "react";
+import axios from "axios";
 
-export default function HabitsList({ userHabits, setUserHabits }) {
+import UserContext from "../contexts/UserContext";
+
+export default function HabitsList({ userHabits, setUserHabits, getUserHabits }) {
     console.log(userHabits);
+
+    const { user } = useContext(UserContext);
+
+    function deleteHabit(h) {
+        const config = { headers: { Authorization: `Bearer ${user.token}` } }; 
+        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`, config);
+        
+        request.then(response => {
+            getUserHabits();
+        })
+
+        request.catch(error => {
+            alert("Algo deu errado com sua requisição, por favor, tente novamente.");
+        })
+    }
 
     return(
         <HabitContainer>
@@ -18,7 +37,7 @@ export default function HabitsList({ userHabits, setUserHabits }) {
                         <Li selected={h.days.includes(5) ? true : false}>S</Li>
                         <Li selected={h.days.includes(6) ? true : false}>S</Li>
                     </ul>
-                    <img src={trash} alt="Trash icon" />
+                    <img onClick={() => deleteHabit(h)} src={trash} alt="Trash icon" />
                 </li>   
             )}
         </HabitContainer>

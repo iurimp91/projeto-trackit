@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import DayJS from "dayjs";
+import "dayjs/locale/pt-br";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -6,12 +8,15 @@ import Footer from "./Footer";
 import check from "../images/check.png";
 
 export default function TodayPage() {
+    const weekday = DayJS().locale('pt-br').format("dddd");
+    const date = DayJS().locale('pt-br').format("DD/MM");
+
     return(
         <>
             <Header />
             <ContentContainer>
                 <TitleContainer>
-                    <h1>Segunda, 17/05</h1>
+                    <h1>{weekday}, {date}</h1>
                     <span>Nenhum hábito concluído ainda</span>
                 </TitleContainer>
                 <HabitsList>

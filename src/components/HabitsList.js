@@ -11,16 +11,20 @@ export default function HabitsList({ userHabits, setUserHabits, getUserHabits })
     const { user } = useContext(UserContext);
 
     function deleteHabit(h) {
-        const config = { headers: { Authorization: `Bearer ${user.token}` } }; 
-        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`, config);
-        
-        request.then(response => {
-            getUserHabits();
-        })
+        if(window.confirm("Você tem certeza que quer deletar o hábito?")) {
+            const config = { headers: { Authorization: `Bearer ${user.token}` } }; 
+            const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`, config);
+            
+            request.then(response => {
+                getUserHabits();
+            })
 
-        request.catch(error => {
-            alert("Algo deu errado com sua requisição, por favor, tente novamente.");
-        })
+            request.catch(error => {
+                alert("Algo deu errado com sua requisição, por favor, tente novamente.");
+            })
+        } else {
+            return;
+        }
     }
 
     return(

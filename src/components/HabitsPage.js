@@ -11,6 +11,8 @@ import addButton from "../images/add-button.png";
 export default function HabitsPage() {
     const [enableNewHabit, setEnableNewHabit] = useState(false);
     const [userHabits, setUserHabits] = useState([]);
+    const [habitName, setHabitName] = useState("");
+    const [selectedDays, setSelectedDays] = useState([]);
 
     function addHabit() {
         setEnableNewHabit(true);
@@ -24,7 +26,16 @@ export default function HabitsPage() {
                     <h1>Meus hábitos</h1>
                     <img src={addButton} alt="Add item icon" onClick={addHabit} />
                 </TitleContainer>
-                {enableNewHabit && <NewHabitContainer setEnableNewHabit={setEnableNewHabit} />}
+                {
+                    enableNewHabit &&
+                    <NewHabitContainer
+                        setEnableNewHabit={setEnableNewHabit}
+                        habitName={habitName}
+                        setHabitName={setHabitName}
+                        selectedDays={selectedDays}
+                        setSelectedDays={setSelectedDays}
+                    />
+                }
                 {userHabits.length === 0 
                     ? <span>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</span>
                     : <HabitsList userHabits={userHabits} setUserHabits={setUserHabits} />    

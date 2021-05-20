@@ -1,22 +1,19 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Loading from "./Loading";
 
-export default function NewHabitContainer({ setEnableNewHabit }) {
-    const [habitName, setHabitName] = useState("");
-    const [selectedDays, setSelectedDays] = useState([]);
+export default function NewHabitContainer({ setEnableNewHabit, habitName, setHabitName, selectedDays, setSelectedDays }) {
     const [body, setBody] = useState(null);
-
     const [days, setDays] = useState([
-        { weedkay: "D", day: 0, isSelected: false},
-        { weedkay: "S", day: 1, isSelected: false},
-        { weedkay: "T", day: 2, isSelected: false},
-        { weedkay: "Q", day: 3, isSelected: false},
-        { weedkay: "Q", day: 4, isSelected: false},
-        { weedkay: "S", day: 5, isSelected: false},
-        { weedkay: "S", day: 6, isSelected: false},
+        { weedkay: "D", day: 0, isSelected: (selectedDays.find(d => d.day === 0))},
+        { weedkay: "S", day: 1, isSelected: (selectedDays.find(d => d.day === 1))},
+        { weedkay: "T", day: 2, isSelected: (selectedDays.find(d => d.day === 2))},
+        { weedkay: "Q", day: 3, isSelected: (selectedDays.find(d => d.day === 3))},
+        { weedkay: "Q", day: 4, isSelected: (selectedDays.find(d => d.day === 4))},
+        { weedkay: "S", day: 5, isSelected: (selectedDays.find(d => d.day === 5))},
+        { weedkay: "S", day: 6, isSelected: (selectedDays.find(d => d.day === 6))},
     ]);
 
     function selectDay(day) {
@@ -36,7 +33,11 @@ export default function NewHabitContainer({ setEnableNewHabit }) {
         const newBody = { name: habitName, day: selectedDays.map(d => d.day) }
         setBody(newBody);
         console.log(newBody);
-        //const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", newBody);
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", newBody);
+    
+        request.then(response => {
+            
+        })
     }
 
     console.log(days);
@@ -49,6 +50,7 @@ export default function NewHabitContainer({ setEnableNewHabit }) {
                 type="text"
                 placeholder="nome do hábito"
                 onChange={(e) => setHabitName(e.target.value)}
+                value={habitName}
             />
             <ul>
                 {days.map(day => 

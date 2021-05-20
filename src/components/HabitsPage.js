@@ -12,7 +12,6 @@ export default function HabitsPage() {
     const [enableNewHabit, setEnableNewHabit] = useState(false);
     const [userHabits, setUserHabits] = useState([]);
     const [habitName, setHabitName] = useState("");
-    const [selectedDays, setSelectedDays] = useState([]);
 
     function addHabit() {
         setEnableNewHabit(true);
@@ -32,8 +31,6 @@ export default function HabitsPage() {
                         setEnableNewHabit={setEnableNewHabit}
                         habitName={habitName}
                         setHabitName={setHabitName}
-                        selectedDays={selectedDays}
-                        setSelectedDays={setSelectedDays}
                     />
                 }
                 {userHabits.length === 0 

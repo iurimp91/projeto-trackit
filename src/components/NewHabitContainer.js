@@ -1,47 +1,65 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 
 import Loading from "./Loading";
+import DaysContext from "../contexts/DaysContext";
+import UserContext from "../contexts/UserContext";
 
-export default function NewHabitContainer({ setEnableNewHabit, habitName, setHabitName, selectedDays, setSelectedDays }) {
+export default function NewHabitContainer({ setEnableNewHabit, habitName, setHabitName }) {
     const [body, setBody] = useState(null);
-    const [days, setDays] = useState([
-        { weedkay: "D", day: 0, isSelected: (selectedDays.find(d => d.day === 0))},
-        { weedkay: "S", day: 1, isSelected: (selectedDays.find(d => d.day === 1))},
-        { weedkay: "T", day: 2, isSelected: (selectedDays.find(d => d.day === 2))},
-        { weedkay: "Q", day: 3, isSelected: (selectedDays.find(d => d.day === 3))},
-        { weedkay: "Q", day: 4, isSelected: (selectedDays.find(d => d.day === 4))},
-        { weedkay: "S", day: 5, isSelected: (selectedDays.find(d => d.day === 5))},
-        { weedkay: "S", day: 6, isSelected: (selectedDays.find(d => d.day === 6))},
-    ]);
-
+    const { days, setDays } = useContext(DaysContext);
+    const { user } = useContext(UserContext);
+   
     function selectDay(day) {
         if(body !== null) {
             return;
         }
         if(!day.isSelected) {
-            setSelectedDays([...selectedDays, day])
             setDays([...days], day.isSelected = true);
         } else {
-            setSelectedDays(selectedDays.filter(d => d !== day));
             setDays([...days], day.isSelected = false);
         }
     }
 
-    function createHabit() {
-        const newBody = { name: habitName, day: selectedDays.map(d => d.day) }
-        setBody(newBody);
-        console.log(newBody);
-        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", newBody);
-    
-        request.then(response => {
-            
+    let selectedDays = [];
+    function getSelectedDays() {
+        days.forEach(d => {
+            if(d.isSelected) {
+                selectedDays.push(d.day);
+            }
         })
     }
 
+    function createHabit() {
+        getSelectedDays(); 
+        const newBody = { name: habitName, days: selectedDays }
+        setBody(newBody);
+
+        const config = { headers: { Authorization: `Bearer ${user.token}` } }
+
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", newBody, config);
+    
+        request.then(response => {
+            console.log("deu certo");
+            setBody(null);
+            setEnableNewHabit(false);
+            setHabitName("");
+            resetDays();
+        })
+
+        request.catch(response => {
+            alert("Algo com sua requisição deu errado, tente novamente, por favor.");
+            setBody(null);
+        })
+    }
+
+    function resetDays() {
+        setDays(days.map(d => {
+            return { weekday: d.weekday, day: d.day, isSelected: false }
+        }));
+    }
     console.log(days);
-    console.log(selectedDays);
 
     return(
         <NewHabit>
@@ -57,7 +75,7 @@ export default function NewHabitContainer({ setEnableNewHabit, habitName, setHab
                     <Weekday 
                         selected={day.isSelected}
                         onClick={() => selectDay(day)}>
-                        {day.weedkay}
+                        {day.weekday}
                     </Weekday>
                 )}
             </ul>

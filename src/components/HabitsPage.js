@@ -1,25 +1,30 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import NewHabitContainer from "./NewHabitContainer";
 
 import addButton from "../images/add-button.png";
 import trash from "../images/trash.png";
 
 export default function HabitsPage() {
+    const [enableNewHabit, setEnableNewHabit] = useState(false);
+
+    function addHabit() {
+        setEnableNewHabit(true);
+        console.log("oi");
+    }
+
     return(
         <>
             <Header />
             <ContentContainer>
                 <TitleContainer>
                     <h1>Meus hábitos</h1>
-                    <img src={addButton} alt="Add item icon" />
+                    <img src={addButton} alt="Add item icon" onClick={addHabit} />
                 </TitleContainer>
-                <NewHabitContainer>
-                    <input type="text" placeholder="nome do hábito" />
-                    <ul><li>D</li><li>S</li><li>T</li><li>Q</li><li>Q</li><li>S</li><li>S</li></ul>
-                    <div><span>Cancelar</span><button>Salvar</button></div>
-                </NewHabitContainer>
+                {enableNewHabit && <NewHabitContainer setEnableNewHabit={setEnableNewHabit} />}
                 <HabitsList>
                     <li className="habit">
                         <span>Ler 1 capítulo de livro</span>
@@ -65,72 +70,6 @@ const TitleContainer = styled.div`
         height: 35px;
         margin-top: 30px;
         cursor: pointer;
-    }
-`;
-
-const NewHabitContainer = styled.div`
-    width: 100%;
-    height: 180px;
-    padding: 18px 18px 15px 18px;
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    margin-bottom: 10px;
-
-    input {
-        width: 303px;
-        height: 45px;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        margin-bottom: 6px;
-        font-size: 20px;
-        color: #666666;
-        padding-left: 7px;
-
-        ::placeholder {
-            color: #DBDBDB;    
-        }
-    }
-
-    ul {
-        display: flex;
-        
-        li {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #D4D4D4;
-            color: #DBDBDB;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 4px;
-        }
-    }
-
-    div {
-        margin-top: 30px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
-        span {
-            font-size: 16px;
-            color: #52B6FF;
-            cursor: pointer;
-            margin-right: 23px;
-        }
-
-        button {
-            width: 84px;
-            height: 35px;
-            border-radius: 5px;
-            border: none;
-            background-color: #52B6FF;
-            color: #FFFFFF;
-            font-size: 16px;
-            cursor: pointer;
-        }
     }
 `;
 

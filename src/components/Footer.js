@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 export default function Footer() {
     return(
         <Bottom>
-            <Link to="/habitos">
+            <Link to="/habitos" style={{ textDecoration: 'none' }}>
                 <span>Hábitos</span>
-            </Link>
-            <Link to="/">
-                <span>Histórico</span>
             </Link>
             <Link to="/hoje">
                 <button>Hoje</button>
+            </Link>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+                <span>Histórico</span>
             </Link>
         </Bottom>
     );

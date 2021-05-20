@@ -18,17 +18,17 @@ export default function LogInPage(props) {
     function signIn() {
         const newBody = { email, password };
         setBody(newBody);
-        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", newBody);
+        //const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", newBody);
     
-        request.then(response => {
-            setUser(response.data);
-            history.push("/hoje");
-        });
+        //request.then(response => {
+        //    setUser(response.data);
+        //    history.push("/hoje");
+        //});
 
-        request.catch(response => {
-            alert("Por favor, confira seu email e senha e tente novamente.");
-            setBody(null);
-        });
+        //request.catch(response => {
+        //    alert("Por favor, confira seu email e senha e tente novamente.");
+        //    setBody(null);
+        //});
     }
 
     return(

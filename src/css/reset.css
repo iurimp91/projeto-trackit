@@ -50,23 +50,3 @@ table {
 * {
     box-sizing: border-box;
 }
-
-.weekday {
-	width: 30px;
-	height: 30px;
-	border-radius: 5px;
-	border: 1px solid #D4D4D4;
-	color: #DBDBDB;
-	font-size: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-right: 4px;
-	cursor: pointer;
-	background-color: #FFFFFF;
-}
-
-.selecionado {
-	background-color: #CFCFCF;
-	color: white;
-}

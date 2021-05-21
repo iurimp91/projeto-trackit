@@ -6,6 +6,7 @@ import LogInPage from "./LogInPage";
 import SignUpPage from "./SignUpPage";
 import HabitsPage from "./HabitsPage";
 import TodayPage from "./TodayPage";
+import HistoryPage from "./HistoryPage";
 import UserContext from "../contexts/UserContext";
 import DaysContext from "../contexts/DaysContext";
 import HabitsContext from "../contexts/HabitsContext";
@@ -41,6 +42,9 @@ export default function App() {
                             </Route>
                             <Route exact path="/hoje">
                                 <TodayPage />
+                            </Route>
+                            <Route exact path="/historico">
+                                <HistoryPage />
                             </Route>
                         </Switch>
                     </UserContext.Provider>

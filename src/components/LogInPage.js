@@ -15,6 +15,12 @@ export default function LogInPage(props) {
     const history = useHistory();
     const { user, setUser } = useContext(UserContext);
 
+    if(localStorage.length !== 0) {
+        const userData = localStorage.getItem("user");
+        setUser(JSON.parse(userData));
+        history.push("/hoje");
+    }
+
     function signIn() {
         const newBody = { email, password };
         setBody(newBody);

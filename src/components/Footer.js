@@ -11,7 +11,7 @@ export default function Footer() {
             <Link to="/hoje">
                 <div><Progressbar /></div>
             </Link>
-            <Link to="/" style={{ textDecoration: 'none' }}>
+            <Link to="/historico" style={{ textDecoration: 'none' }}>
                 <span>Histórico</span>
             </Link>
         </Bottom>

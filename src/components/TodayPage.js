@@ -17,18 +17,15 @@ export default function TodayPage() {
     const { user } = useContext(UserContext);
     const { todayHabits, setTodayHabits } = useContext(HabitsContext);
     const config = { headers: { Authorization: `Bearer ${user.token}` } }
-    // const [todayHabits, setTodayHabits] = useState([
-    //     {id: 610, name: "Ler 10 páginas", done: false, currentSequence: 2, highestSequence: 3},
-    //     {id: 611, name: "Brincar com Ísis", done: false, currentSequence: 0, highestSequence: 2},
-    //     {id: 614, name: "Pilates", done: false, currentSequence: 1, highestSequence: 1}
-    // ]);
-    
+    const [previousHighest, setPreviousHighest] = useState([]);
+
     useEffect(() => {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
         request.then(response => {
             setTodayHabits(response.data);
+            setPreviousHighest(response.data.map(item => item.highestSequence));
         })
 
         request.catch(error => {
@@ -36,16 +33,11 @@ export default function TodayPage() {
         })
     }, [])
 
-    let previousHighestSequence;
-
-    function completeHabit(h, previousHighestSequence) {
-        previousHighestSequence = h.highestSequence;
-        console.log(previousHighestSequence);
+    function completeHabit(h) {
         setTodayHabits([...todayHabits], h.done = true, h.currentSequence += 1);
         if(h.currentSequence > h.highestSequence){
             setTodayHabits([...todayHabits], h.highestSequence = h.currentSequence);
         }
-        console.log(h)
 
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}/check`, "", config);
 
@@ -54,15 +46,11 @@ export default function TodayPage() {
         })
     }
 
-    function deselectHabit(h, previousHighestSequence) {
-        console.log(previousHighestSequence);
-        console.log(h.highestSequence);
-        if(h.currentSequence === h.highestSequence && previousHighestSequence === h.highestSequence) {
+    function deselectHabit(h, i) {
+        if(h.currentSequence === h.highestSequence && h.highestSequence !== previousHighest[i]) {
             setTodayHabits([...todayHabits], h.highestSequence -= 1);
-            console.log("entrou");
         }
         setTodayHabits([...todayHabits], h.done = false, h.currentSequence -= 1);
-        console.log(h)
 
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}/uncheck`, "", config);
 
@@ -71,11 +59,11 @@ export default function TodayPage() {
         });
     }
 
-    function selectHabit(h) {
+    function selectHabit(h, i) {
         if(!h.done) {
-            completeHabit(h, previousHighestSequence);
+            completeHabit(h);
         } else {
-            deselectHabit(h, previousHighestSequence);
+            deselectHabit(h, i);
         }
     }
 
@@ -94,14 +82,14 @@ export default function TodayPage() {
                     : <span>Nenhum hábito concluído ainda</span>}
                 </TitleContainer>
                 <HabitsList>
-                    {todayHabits.map(h =>
+                    {todayHabits.map((h, i) =>
                         <li key={h.id} className="habit">
                             <div>
                                 <h1>{h.name}</h1>
                                 <h2>Sequência atual: <Span done={h.done}>{h.currentSequence} {h.currentSequence === 0 ? "" : h.currentSequence === 1 ? "dia" : "dias"}</Span></h2>
                                 <h2>Seu recorde: <Span done={h.currentSequence === h.highestSequence && h.highestSequence !== 0}>{h.highestSequence} {h.highestSequence === 0 ? "" : h.highestSequence === 1 ? "dia" : "dias"}</Span></h2>
                             </div>
-                            <Button onClick={() => selectHabit(h)} done={h.done}><img src={check} alt="Check icon" /></Button>
+                            <Button onClick={() => selectHabit(h, i)} done={h.done}><img src={check} alt="Check icon" /></Button>
                         </li>  
                     )}
                 </HabitsList>

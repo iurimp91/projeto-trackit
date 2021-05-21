@@ -55,9 +55,7 @@ export default function HabitsPage() {
                 {userHabits.length === 0 
                     ? <span>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</span>
                     : <HabitsList userHabits={userHabits} setUserHabits={setUserHabits} getUserHabits={getUserHabits} />    
-                }
-                
-                
+                } 
             </ContentContainer>
             <Footer />
         </>

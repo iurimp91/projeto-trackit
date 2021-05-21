@@ -68,7 +68,18 @@ export default function TodayPage() {
     }
 
     if(todayHabits.length === 0) {
-        return <div></div>;
+        return (
+            <>
+                <Header />
+                <ContentContainer>
+                    <TitleContainer>
+                        <h1>{weekday}, {date}</h1>
+                        <span>Nenhum hábito adicionado ainda</span>
+                    </TitleContainer>
+                </ContentContainer>
+                <Footer />
+            </>
+        );
     }
 
     return(

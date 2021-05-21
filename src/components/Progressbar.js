@@ -7,7 +7,12 @@ import HabitsContext from "../contexts/HabitsContext";
 
 export default function Progressbar() {
     const { todayHabits, setTodayHabits } = useContext(HabitsContext);
-    const percentage = todayHabits.reduce((acc, h) => h.done ? acc +=1 : acc += 0, 0) / todayHabits.length * 100;
+    let percentage;
+    if(todayHabits.length !== 0) {
+        percentage = todayHabits.reduce((acc, h) => h.done ? acc +=1 : acc += 0, 0) / todayHabits.length * 100;
+    } else {
+        percentage = 0;
+    }
 
     return (
         <CircularProgressbar

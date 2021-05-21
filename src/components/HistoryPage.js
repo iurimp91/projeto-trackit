@@ -24,24 +24,14 @@ export default function HistoryPage() {
     
     },[])
 
-    if(habitsHistory.length === 0) {
-        return <div></div>;
-    }
-
     const onChange = date => {
         setDate(date);
     };
 
     function tileClassName({ date, view }) {
-        console.log(date);
-        let style = "";
-        // Add class to tiles in month view only
-        if (view === 'month') {
-            // Check if a date React-Calendar wants to check is on the list of dates to add class to
-            
+        if (view === 'month') {            
             for (let i = 0; i < habitsHistory.length; i++) {
                 if (habitsHistory[i].day === DayJS(date).format('DD/MM/YYYY')) {
-                    console.log('entrou');
                     if (habitsHistory[i].habits.find(d => d.done === false)) {
                         return 'notcompleted';
                     } else {
@@ -51,9 +41,6 @@ export default function HistoryPage() {
             } 
         } 
     }
-
-    console.log(habitsHistory);
-    console.log(DayJS(date).format('DD/MM/YYYY'));
 
     return(
         <>

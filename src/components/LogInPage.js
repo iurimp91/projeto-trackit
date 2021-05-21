@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import Loading from "./Loading";
 
@@ -15,11 +15,13 @@ export default function LogInPage(props) {
     const history = useHistory();
     const { user, setUser } = useContext(UserContext);
 
-    if(localStorage.length !== 0) {
-        const userData = localStorage.getItem("user");
-        setUser(JSON.parse(userData));
-        history.push("/hoje");
-    }
+    useEffect(() => {
+        if(localStorage.length !== 0) {
+            const userData = localStorage.getItem("user");
+            setUser(JSON.parse(userData));
+            history.push("/hoje");
+        }
+    },[])
 
     function signIn() {
         const newBody = { email, password };

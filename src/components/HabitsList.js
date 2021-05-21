@@ -6,8 +6,6 @@ import axios from "axios";
 import UserContext from "../contexts/UserContext";
 
 export default function HabitsList({ userHabits, setUserHabits, getUserHabits }) {
-    console.log(userHabits);
-
     const { user } = useContext(UserContext);
 
     function deleteHabit(h) {

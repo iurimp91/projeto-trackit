@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Progressbar from "./Progressbar";
 
 export default function Footer() {
+    const percentage = 66;
+
     return(
         <Bottom>
             <Link to="/habitos" style={{ textDecoration: 'none' }}>
                 <span>Hábitos</span>
             </Link>
             <Link to="/hoje">
-                <button>Hoje</button>
+                <div><Progressbar className="progressbar" /></div>
             </Link>
             <Link to="/" style={{ textDecoration: 'none' }}>
                 <span>Histórico</span>
@@ -29,21 +32,23 @@ const Bottom = styled.div`
     justify-content: space-between;
     padding: 0 30px;
 
+    .progressbar {
+        position: absolute;
+        left: 0;
+    }
+
     span {
         font-size: 18px;
         color: #52B6FF;
         cursor: pointer;
     }
 
-    button {
+    div {
+        font-family: 'Lexend Deca';
+        font-size: 18px;
         width: 91px;
         height: 91px;
-        border-radius: 100px;
-        background-color: #52B6FF;
-        color: #FFFFFF;
-        border: none;
         cursor: pointer;
-        font-size: 18px;
         position: absolute;
         bottom: 10px;
         left: calc((100vw - 91px) / 2);

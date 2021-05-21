@@ -12,7 +12,7 @@ import HabitsContext from "../contexts/HabitsContext";
 import check from "../images/check.png";
 
 export default function TodayPage() {
-    const weekday = DayJS().locale('pt-br').format("dddd");
+    const weekday = DayJS().locale('pt-br').format("dddd").replace("-feira", "");
     const date = DayJS().locale('pt-br').format("DD/MM");
     const { user } = useContext(UserContext);
     const { todayHabits, setTodayHabits } = useContext(HabitsContext);

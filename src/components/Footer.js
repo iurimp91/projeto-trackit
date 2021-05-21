@@ -3,15 +3,13 @@ import { Link } from "react-router-dom";
 import Progressbar from "./Progressbar";
 
 export default function Footer() {
-    const percentage = 66;
-
     return(
         <Bottom>
             <Link to="/habitos" style={{ textDecoration: 'none' }}>
                 <span>Hábitos</span>
             </Link>
             <Link to="/hoje">
-                <div><Progressbar className="progressbar" /></div>
+                <div><Progressbar /></div>
             </Link>
             <Link to="/" style={{ textDecoration: 'none' }}>
                 <span>Histórico</span>
@@ -31,11 +29,6 @@ const Bottom = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
-
-    .progressbar {
-        position: absolute;
-        left: 0;
-    }
 
     span {
         font-size: 18px;

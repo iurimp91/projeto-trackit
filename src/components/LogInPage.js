@@ -22,6 +22,8 @@ export default function LogInPage(props) {
     
         request.then(response => {
             setUser(response.data);
+            const stringUserData = JSON.stringify(response.data);
+            localStorage.setItem("user", stringUserData);
             history.push("/hoje");
         });
 

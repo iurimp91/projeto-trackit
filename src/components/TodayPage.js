@@ -82,7 +82,7 @@ export default function TodayPage() {
     if(todayHabits.length === 0) {
         return <div></div>;
     }
-    const percentage = 66;
+
     return(
         <>
             <Header />
